@@ -49,7 +49,7 @@ NSString * const ABNotifierDevelopmentEnvironment           = @"Development";
 NSString * const ABNotifierAdHocEnvironment                 = @"AdHoc";
 NSString * const ABNotifierAppStoreEnvironment              = @"AppStore";
 NSString * const ABNotifierReleaseEnvironment               = @"Release";
-#if defined (DEBUG) || defined (DEVELOPMENT)
+#if defined (DEBUG) || defined (DEVELOPMENT) || defined (CONFIGURATION_Debug)
 NSString * const ABNotifierAutomaticEnvironment             = @"Development";
 #elif defined (TEST) || defined (TESTING)
 NSString * const ABNotifierAutomaticEnvironment             = @"Test";
