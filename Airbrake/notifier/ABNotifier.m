@@ -34,11 +34,11 @@ static SCNetworkReachabilityRef __reachability = nil;
 static id<ABNotifierDelegate> __delegate = nil;
 static NSMutableDictionary *__userData;
 static NSString * __APIKey = nil;
+static NSString * __HostName = nil;
 static BOOL __useSSL = NO;
 static BOOL __displayPrompt = YES;
 
 // constant strings
-static NSString * const ABNotifierHostName                  = @"api.airbrake.io";
 static NSString * const ABNotifierAlwaysSendKey             = @"AlwaysSendCrashReports";
 NSString * const ABNotifierWillDisplayAlertNotification     = @"ABNotifierWillDisplayAlert";
 NSString * const ABNotifierDidDismissAlertNotification      = @"ABNotifierDidDismissAlert";
@@ -92,10 +92,12 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 
 #pragma mark - initialize the notifier
 + (void)startNotifierWithAPIKey:(NSString *)key
+                       hostName:(NSString *)hostName
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate {
+                       delegate:(id <ABNotifierDelegate>)delegate {
     [self startNotifierWithAPIKey:key
+                         hostName:hostName
                   environmentName:name
                            useSSL:useSSL
                          delegate:delegate
@@ -103,13 +105,16 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
              installSignalHandler:YES
                 displayUserPrompt:YES];
 }
+
 + (void)startNotifierWithAPIKey:(NSString *)key
+                       hostName:(NSString *)hostName
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate
+                       delegate:(id <ABNotifierDelegate>)delegate
         installExceptionHandler:(BOOL)exception
            installSignalHandler:(BOOL)signal {
     [self startNotifierWithAPIKey:key
+                         hostName:hostName
                   environmentName:name
                            useSSL:useSSL
                          delegate:delegate
@@ -117,10 +122,12 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
              installSignalHandler:signal
                 displayUserPrompt:YES];
 }
+
 + (void)startNotifierWithAPIKey:(NSString *)key
+                       hostName:(NSString *)hostName
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate
+                       delegate:(id <ABNotifierDelegate>)delegate
         installExceptionHandler:(BOOL)exception
            installSignalHandler:(BOOL)signal
               displayUserPrompt:(BOOL)display {
@@ -144,7 +151,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             // switch on api key
             if ([key length]) {
                 __APIKey = [key copy];
-                __reachability = SCNetworkReachabilityCreateWithName(NULL, [ABNotifierHostName UTF8String]);
+                __reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
                 if (SCNetworkReachabilitySetCallback(__reachability, ABNotifierReachabilityDidChange, nil)) {
                     if (!SCNetworkReachabilityScheduleWithRunLoop(__reachability, CFRunLoopGetMain(), kCFRunLoopDefaultMode)) {
                         ABLog(@"Reachability could not be configired. No notices will be posted.");
@@ -403,7 +410,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     NSString *URLString = [NSString stringWithFormat:
                            @"%@://%@/notifier_api/v2/notices",
                            (__useSSL ? @"https" : @"http"),
-                           ABNotifierHostName];
+                           __HostName];
     NSURL *URL = [NSURL URLWithString:URLString];
     
 #if TARGET_OS_IPHONE
