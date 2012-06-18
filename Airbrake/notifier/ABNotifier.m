@@ -151,6 +151,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             // switch on api key
             if ([key length]) {
                 __APIKey = [key copy];
+                __HostName = [hostName copy];
                 __reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
                 if (SCNetworkReachabilitySetCallback(__reachability, ABNotifierReachabilityDidChange, nil)) {
                     if (!SCNetworkReachabilityScheduleWithRunLoop(__reachability, CFRunLoopGetMain(), kCFRunLoopDefaultMode)) {
