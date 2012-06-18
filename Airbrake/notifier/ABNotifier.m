@@ -46,8 +46,8 @@ NSString * const ABNotifierWillPostNoticesNotification      = @"ABNotifierWillPo
 NSString * const ABNotifierDidPostNoticesNotification       = @"ABNotifierDidPostNotices";
 NSString * const ABNotifierVersion                          = @"3.1";
 NSString * const ABNotifierDevelopmentEnvironment           = @"Development";
-NSString * const ABNotifierAdHocEnvironment                 = @"Ad Hoc";
-NSString * const ABNotifierAppStoreEnvironment              = @"App Store";
+NSString * const ABNotifierAdHocEnvironment                 = @"AdHoc";
+NSString * const ABNotifierAppStoreEnvironment              = @"AppStore";
 NSString * const ABNotifierReleaseEnvironment               = @"Release";
 #if defined (DEBUG) || defined (DEVELOPMENT)
 NSString * const ABNotifierAutomaticEnvironment             = @"Development";
