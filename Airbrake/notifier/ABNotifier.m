@@ -232,6 +232,12 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 }
 
 #pragma mark - write data
+
++ (void)logError:(NSError *)error {
+    NSException *exception = [NSException exceptionWithName:NSStringFromClass([error class]) reason:error.localizedFailureReason userInfo:error.userInfo];
+    [self logException:exception];
+}
+
 + (void)logException:(NSException *)exception parameters:(NSDictionary *)parameters {
     
     // force all activity onto main thread

@@ -91,6 +91,9 @@ extern NSString * const ABNotifierDidPostNoticesNotification;
 + (id<ABNotifierDelegate>)delegate;
 + (NSString *)APIKey;
 
++ (void)logError:(NSError *)error;
+
+
 /*
  
  Log an exception and optionally save parameters with this exception. These
