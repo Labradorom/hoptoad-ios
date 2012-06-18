@@ -613,18 +613,21 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     
 #if TARGET_OS_IPHONE
     
-    GCAlertView *alert = [[GCAlertView alloc] initWithTitle:title message:body];
-    [alert addButtonWithTitle:ABLocalizedString(@"ALWAYS_SEND") block:^{
-        setDefaultsBlock();
-        postNoticesBlock();
-    }];
-    [alert addButtonWithTitle:ABLocalizedString(@"SEND") block:postNoticesBlock];
-    [alert addButtonWithTitle:ABLocalizedString(@"DONT_SEND") block:deleteNoticesBlock];
-    [alert setDidDismissBlock:delegateDismissBlock];
-    [alert setDidDismissBlock:delegatePresentBlock];
-    [alert setCancelButtonIndex:2];
-    [alert show];
-    [alert release];
+//    GCAlertView *alert = [[GCAlertView alloc] initWithTitle:title message:body];
+//    [alert addButtonWithTitle:ABLocalizedString(@"ALWAYS_SEND") block:^{
+//        setDefaultsBlock();
+//        postNoticesBlock();
+//    }];
+//    [alert addButtonWithTitle:ABLocalizedString(@"SEND") block:postNoticesBlock];
+//    [alert addButtonWithTitle:ABLocalizedString(@"DONT_SEND") block:deleteNoticesBlock];
+//    [alert setDidDismissBlock:delegateDismissBlock];
+//    [alert setDidDismissBlock:delegatePresentBlock];
+//    [alert setCancelButtonIndex:2];
+//    [alert show];
+//    [alert release];
+
+    // Never showing the UI - we will always send error notifications
+    postNoticesBlock();
     
 #else
     
