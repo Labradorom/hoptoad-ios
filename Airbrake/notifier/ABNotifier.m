@@ -584,34 +584,34 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     }
     
     // declare blocks
-    void (^delegateDismissBlock) (void) = ^{
-        if ([delegate respondsToSelector:@selector(notifierDidDismissAlert)]) {
-            [delegate notifierDidDismissAlert];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierDidDismissAlertNotification object:self];
-    };
-    void (^delegatePresentBlock) (void) = ^{
-        if ([delegate respondsToSelector:@selector(notifierWillDisplayAlert)]) {
-            [delegate notifierWillDisplayAlert];
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierWillDisplayAlertNotification object:self];
-    };
+//    void (^delegateDismissBlock) (void) = ^{
+//        if ([delegate respondsToSelector:@selector(notifierDidDismissAlert)]) {
+//            [delegate notifierDidDismissAlert];
+//        }
+//        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierDidDismissAlertNotification object:self];
+//    };
+//    void (^delegatePresentBlock) (void) = ^{
+//        if ([delegate respondsToSelector:@selector(notifierWillDisplayAlert)]) {
+//            [delegate notifierWillDisplayAlert];
+//        }
+//        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierWillDisplayAlertNotification object:self];
+//    };
     void (^postNoticesBlock) (void) = ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self postNoticesWithPaths:paths];
         });
     };
-    void (^deleteNoticesBlock) (void) = ^{
-        NSFileManager *manager = [NSFileManager defaultManager];
-        [paths enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [manager removeItemAtPath:obj error:nil];
-        }];
-    };
-    void (^setDefaultsBlock) (void) = ^{
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:YES forKey:ABNotifierAlwaysSendKey];
-        [defaults synchronize];
-    };
+//    void (^deleteNoticesBlock) (void) = ^{
+//        NSFileManager *manager = [NSFileManager defaultManager];
+//        [paths enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//            [manager removeItemAtPath:obj error:nil];
+//        }];
+//    };
+//    void (^setDefaultsBlock) (void) = ^{
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setBool:YES forKey:ABNotifierAlwaysSendKey];
+//        [defaults synchronize];
+//    };
     
 #if TARGET_OS_IPHONE
     
